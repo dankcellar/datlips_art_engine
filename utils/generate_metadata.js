@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const { createCanvas, loadImage } = require("canvas");
 const basePath = process.cwd();
 const buildDir = `${basePath}/build/json`;
 const inputDir = `${basePath}/build/images`;
@@ -11,9 +10,9 @@ const {
   baseUri,
 } = require(`${basePath}/src/config.js`);
 const console = require("console");
-const canvas = createCanvas(format.width, format.height);
-const ctx = canvas.getContext("2d");
 const metadataList = [];
+let canvas = null;
+let ctx = null;
 
 const buildSetup = () => {
   if (fs.existsSync(buildDir)) {
@@ -178,5 +177,19 @@ const startCreating = async () => {
   writeMetaData(JSON.stringify(metadataList, null, 2));
 };
 
-buildSetup();
-startCreating();
+// This is exported for electron to call this process
+module.exports = (_canvas) => {
+  canvas = _canvas;
+  ctx = canvas.getContext("2d");
+  buildSetup();
+  startCreating();
+};
+
+// This code will only run when the file is the main script being executed
+if (require.main === module) {
+  const { createCanvas, loadImage } = require("canvas");
+  canvas = createCanvas(format.width, format.height);
+  ctx = canvas.getContext("2d");
+  buildSetup();
+  startCreating();
+}
