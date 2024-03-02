@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DatLips GUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <link rel="stylesheet" href="styles/flexbox.css" />
+  </head>
+
+  <body>
+    <header></header>
+    <main class="container">
+      <div class="grid flex-main">
+        <!-- This is the button screen -->
+        <div class="flex-main-items">
+          <section>
+            <button class="container" id="btn-config">DatLip Settings</button>
+          </section>
+          <section>
+            <button class="container" id="btn-generate">
+              Generate Metadata
+            </button>
+          </section>
+        </div>
+        <!-- This is the view screen -->
+        <div class="flex-main-items">
+          <section class="hidden" id="settings-container">
+            <form action="" id="settings-form">
+              <h2>Settings</h2>
+              <div class="form-group">
+                <label for="collection-size">Collection Size</label>
+                <input
+                  type="number"
+                  id="input-collection-size"
+                  name="collection-size"
+                  min="1"
+                />
+              </div>
+            </form>
+          </section>
+
+          <section class="hidden" id="image-container"></section>
+
+          <section class="" id="editor-container"></section>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+
+    <script type="module" src="scripts/imageGetter.js"></script>
+    <script type="module" src="scripts/codeMirror.js"></script>
+    <script>
+      console.log(window);
+      const ws = new WebSocket("ws://localhost:42069");
+      ws.onmessage = (event) => {
+        console.log(event.data);
+      };
+      const btnGenerate = document.getElementById("btn-generate");
+      btnGenerate.addEventListener("click", () => {
+        ws.send("npm run generate");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+/* https://www.cssportal.com/css-flexbox-generator/ */
+
+.fill {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.flex-main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: normal;
+  align-content: normal;
+}
+
+.flex-main-items:nth-child(1) {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+}
+
+.flex-main-items:nth-child(2) {
+  display: block;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+}
